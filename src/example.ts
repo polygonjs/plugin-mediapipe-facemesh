@@ -22,7 +22,7 @@ webCam.p.flipY.set(true);
 const geo1 = scene.root().createNode('geo') as ExtendedGeoObjNode;
 const mediapipeFacemesh = geo1.createNode('mediapipeFacemesh');
 // give the webcam to the mediapipe facemesh node
-mediapipeFacemesh.p.webcam.set(webCam.path());
+mediapipeFacemesh.p.source.set(webCam.path());
 
 // create a box to see what the webcam shows
 const geo2 = scene.root().createNode('geo');
