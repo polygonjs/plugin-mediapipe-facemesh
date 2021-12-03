@@ -1,11 +1,11 @@
-import {MediapipeFacemeshSopNode} from '../MediapipeFacemesh';
+import {MediapipeFacemeshDeformSopNode} from '../MediapipeFacemeshDeform';
 import {FaceMesh, InputImage, Results, ResultsListener} from '@mediapipe/face_mesh';
 
 export class MediapipeFacemeshController {
 	public readonly faceMesh = this._createFaceMesh();
 	private _inProgress = false;
 
-	constructor(private node: MediapipeFacemeshSopNode) {}
+	constructor(private node: MediapipeFacemeshDeformSopNode) {}
 
 	private _createFaceMesh() {
 		const faceMesh = new FaceMesh({
@@ -18,8 +18,7 @@ export class MediapipeFacemeshController {
 	}
 	setOptions(listener: ResultsListener) {
 		const pv = this.node.pv;
-		const faceMesh = this.node.facemeshController.faceMesh;
-		faceMesh.setOptions({
+		this.faceMesh.setOptions({
 			enableFaceGeometry: true,
 			selfieMode: pv.selfieMode,
 			maxNumFaces: 1,
@@ -30,7 +29,7 @@ export class MediapipeFacemeshController {
 			listener(results);
 			this._inProgress = false;
 		};
-		faceMesh.onResults(listenerWrapper);
+		this.faceMesh.onResults(listenerWrapper);
 	}
 
 	updateFromSource(inputImage: InputImage) {

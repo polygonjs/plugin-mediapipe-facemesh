@@ -1,6 +1,8 @@
 import {GeoNodeChildrenMap} from '@polygonjs/polygonjs/dist/src/engine/poly/registers/nodes/Sop';
-import {MediapipeFacemeshSopNode} from './engine/nodes/sop/MediapipeFacemesh';
+import {MediapipeFacemeshDeformSopNode} from './engine/nodes/sop/MediapipeFacemeshDeform';
+import {MediapipeFacemeshTopologySopNode} from './engine/nodes/sop/MediapipeFacemeshTopology';
 
 export interface ExtendedGeoNodeChildrenMap extends GeoNodeChildrenMap {
-	mediapipeFacemesh: MediapipeFacemeshSopNode;
+	mediapipeFacemeshTopology: MediapipeFacemeshTopologySopNode;
+	mediapipeFacemeshDeform: MediapipeFacemeshDeformSopNode;
 }

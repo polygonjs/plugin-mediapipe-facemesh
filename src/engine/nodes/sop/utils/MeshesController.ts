@@ -1,33 +1,15 @@
-import {CaptureMode, MediapipeFacemeshSopNode} from '../MediapipeFacemesh';
+import {MediapipeFacemeshDeformSopNode} from '../MediapipeFacemeshDeform';
 import {isBooleanTrue} from '@polygonjs/polygonjs/dist/src/core/Type';
-import {FACEMESH_TESSELATION, Results} from '@mediapipe/face_mesh';
-import {BufferGeometry} from 'three/src/core/BufferGeometry';
-import {BufferAttribute} from 'three/src/core/BufferAttribute';
-import {ObjectType} from '@polygonjs/polygonjs/dist/src/core/geometry/Constant';
+import {Results} from '@mediapipe/face_mesh';
 import {Vector3} from 'three/src/math/Vector3';
 import {Vector2} from 'three/src/math/Vector2';
 import {Mesh} from 'three/src/objects/Mesh';
-import {Material} from 'three/src/materials/Material';
-
-const FACEMESH_POINTS_COUNT = 468;
-
-interface InitOptions {
-	material: Material;
-}
 
 export class MediapipeFacemeshMeshesController {
 	public readonly faceMeshObjects: Mesh[] = [];
 	public readonly faceMeshStreamObject: Mesh | undefined;
 
-	constructor(private node: MediapipeFacemeshSopNode) {}
-	initFaceMeshObjects(options?: InitOptions) {
-		this.faceMeshObjects.splice(0, this.faceMeshObjects.length);
-		const count = this.node.captureMode() == CaptureMode.MULTIPLE_FRAMES ? this.node.pv.framesCount : 1;
-		for (let i = 0; i < count; i++) {
-			const object = this.createFaceMeshObject(i, options);
-			this.faceMeshObjects.push(object);
-		}
-	}
+	constructor(private node: MediapipeFacemeshDeformSopNode) {}
 	private _pos = new Vector3();
 	private _uv = new Vector2();
 	private _prevPos = new Vector3();
@@ -41,7 +23,7 @@ export class MediapipeFacemeshMeshesController {
 		const uvArray = uvAttribute.array as number[];
 		const scale = pv.scale;
 		let i = 0;
-		const flipY = this.node.captureMode() != CaptureMode.STREAM;
+		const flipY = false;
 		const selfie = isBooleanTrue(pv.selfieMode);
 		const smoothFactor = pv.smoothFactor;
 		try {
@@ -67,31 +49,5 @@ export class MediapipeFacemeshMeshesController {
 		geometry.computeTangents();
 		positionAttribute.needsUpdate = true;
 		uvAttribute.needsUpdate = true;
-	}
-	createFaceMeshObject(index: number, options?: InitOptions) {
-		const geometry = new BufferGeometry();
-		const positions: number[] = [];
-		const uvs: number[] = [];
-
-		this._pos.set(0, 0, 0);
-		this._uv.set(0, 0);
-		for (let i = 0; i < FACEMESH_POINTS_COUNT; i++) {
-			this._pos.toArray(positions, i * 3);
-			this._uv.toArray(uvs, i * 3);
-		}
-		const indices: number[] = [];
-		const polyCount = FACEMESH_TESSELATION.length / 3;
-		for (let i = 0; i < polyCount; i++) {
-			indices.push(FACEMESH_TESSELATION[i * 3 + 0][0]);
-			indices.push(FACEMESH_TESSELATION[i * 3 + 1][0]);
-			indices.push(FACEMESH_TESSELATION[i * 3 + 2][0]);
-		}
-		geometry.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
-		geometry.setAttribute('uv', new BufferAttribute(new Float32Array(uvs), 2));
-		geometry.setIndex(indices);
-		const material = options?.material?.clone() || this.node.materialsController.material();
-		const object = this.node.createObject(geometry, ObjectType.MESH, material);
-		object.name = `${this.node.path()}-${index}`;
-		return object;
 	}
 }

@@ -1,4 +1,4 @@
-import {MediapipeFacemeshSopNode} from '../MediapipeFacemesh';
+import {MediapipeFacemeshDeformSopNode} from '../MediapipeFacemeshDeform';
 import {NodeContext} from '@polygonjs/polygonjs/dist/src/engine/poly/NodeContext';
 import {CopType} from '@polygonjs/polygonjs/dist/src/engine/poly/registers/nodes/types/Cop';
 import {CoreSleep} from '@polygonjs/polygonjs/dist/src/core/Sleep';
@@ -9,7 +9,7 @@ export const ALLOWED_COP_TYPES = [CopType.VIDEO, CopType.WEB_CAM];
 type AllowedCopType = WebCamCopNode | VideoCopNode;
 
 export class MediapipeFacemeshSourceController {
-	constructor(private node: MediapipeFacemeshSopNode) {}
+	constructor(private node: MediapipeFacemeshDeformSopNode) {}
 	private _activeHTMLVideoElement: HTMLVideoElement | undefined;
 
 	activeHTMLVideoElement() {
