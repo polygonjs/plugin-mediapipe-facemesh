@@ -15,27 +15,33 @@ const scene = new PolyScene();
 // create a webcam COP node
 const COP = scene.root().createNode('copNetwork');
 const webCam = COP.createNode('webCam');
-webCam.p.tflipY.set(true);
-webCam.p.flipY.set(true);
+
+// create a material to use the video as a texture
+const MAT = scene.root().createNode('materialsNetwork');
+const meshBasic = MAT.createNode('meshBasic');
+meshBasic.p.useMap.set(true);
+meshBasic.p.map.set(webCam.path());
 
 // create a mediapipe facemesh SOP node
 const geo1 = scene.root().createNode('geo') as ExtendedGeoObjNode;
-const mediapipeFacemesh = geo1.createNode('mediapipeFacemesh');
+const mediapipeFacemeshTopology = geo1.createNode('mediapipeFacemeshTopology');
+const material1 = geo1.createNode('material');
+material1.p.material.set(meshBasic.path());
+const mediapipeFacemeshDeform = geo1.createNode('mediapipeFacemeshDeform');
+material1.setInput(0, mediapipeFacemeshTopology);
+mediapipeFacemeshDeform.setInput(0, material1);
 // give the webcam to the mediapipe facemesh node
-mediapipeFacemesh.p.source.set(webCam.path());
+mediapipeFacemeshDeform.p.source.set(webCam.path());
+mediapipeFacemeshDeform.flags.display.set(true);
 
 // create a box to see what the webcam shows
 const geo2 = scene.root().createNode('geo');
 const box = geo2.createNode('box');
 box.p.center.set([2, 0, 0]);
-const material = geo2.createNode('material');
-material.setInput(0, box);
-material.flags.display.set(true);
-const MAT = scene.root().createNode('materialsNetwork');
-const meshLambert = MAT.createNode('meshLambert');
-meshLambert.p.useMap.set(true);
-meshLambert.p.map.set(webCam.path());
-material.p.material.set(meshLambert.path());
+const material2 = geo2.createNode('material');
+material2.setInput(0, box);
+material2.flags.display.set(true);
+material2.p.material.set(meshBasic.path());
 
 // add a light
 scene.root().createNode('hemisphereLight');
@@ -52,6 +58,7 @@ perspectiveCamera1.p.controls.setNode(orbitsControls);
 // create viewer
 perspectiveCamera1.createViewer(document.getElementById('app')!);
 
-(window as any).capture = function capture() {
-	mediapipeFacemesh.p.capture.pressButton();
-};
+scene.play();
+// (window as any).capture = function capture() {
+// 	mediapipeFacemesh.p.capture.pressButton();
+// };

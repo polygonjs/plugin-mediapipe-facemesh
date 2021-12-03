@@ -17,6 +17,9 @@ export class MediapipeFacemeshMeshesController {
 	updateMeshFromResults(faceMeshObject: Mesh, results: Results) {
 		const pv = this.node.pv;
 		const landmark = results.multiFaceLandmarks[0];
+		if (!landmark) {
+			return;
+		}
 		const geometry = faceMeshObject.geometry;
 		const positionAttribute = geometry.getAttribute(Attribute.POSITION);
 		const uvAttribute = geometry.getAttribute(Attribute.UV);
