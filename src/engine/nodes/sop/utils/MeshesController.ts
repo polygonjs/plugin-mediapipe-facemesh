@@ -4,6 +4,7 @@ import {Results} from '@mediapipe/face_mesh';
 import {Vector3} from 'three/src/math/Vector3';
 import {Vector2} from 'three/src/math/Vector2';
 import {Mesh} from 'three/src/objects/Mesh';
+import {Attribute} from '@polygonjs/polygonjs/dist/src/core/geometry/Attribute';
 
 export class MediapipeFacemeshMeshesController {
 	public readonly faceMeshObjects: Mesh[] = [];
@@ -17,8 +18,8 @@ export class MediapipeFacemeshMeshesController {
 		const pv = this.node.pv;
 		const landmark = results.multiFaceLandmarks[0];
 		const geometry = faceMeshObject.geometry;
-		const positionAttribute = geometry.getAttribute('position');
-		const uvAttribute = geometry.getAttribute('uv');
+		const positionAttribute = geometry.getAttribute(Attribute.POSITION);
+		const uvAttribute = geometry.getAttribute(Attribute.UV);
 		const positionArray = positionAttribute.array as number[];
 		const uvArray = uvAttribute.array as number[];
 		const scale = pv.scale;

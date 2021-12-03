@@ -2,6 +2,7 @@ import {MediapipeFacemeshDeformSopNode} from '../MediapipeFacemeshDeform';
 import {NodeContext} from '@polygonjs/polygonjs/dist/src/engine/poly/NodeContext';
 import {CopType} from '@polygonjs/polygonjs/dist/src/engine/poly/registers/nodes/types/Cop';
 import {CoreSleep} from '@polygonjs/polygonjs/dist/src/core/Sleep';
+import {CoreDomUtils} from '@polygonjs/polygonjs/dist/src/core/DomUtils';
 import {WebCamCopNode} from '@polygonjs/polygonjs/dist/src/engine/nodes/cop/WebCam';
 import {VideoCopNode} from '@polygonjs/polygonjs/dist/src/engine/nodes/cop/Video';
 
@@ -22,7 +23,7 @@ export class MediapipeFacemeshSourceController {
 			return;
 		}
 		const {videoElement} = data;
-		while (videoElement.paused || videoElement.readyState != 4) {
+		while (videoElement.paused || CoreDomUtils.isHTMLVideoElementLoaded(videoElement)) {
 			console.warn('video is paused or not ready');
 			await CoreSleep.sleep(500);
 		}
