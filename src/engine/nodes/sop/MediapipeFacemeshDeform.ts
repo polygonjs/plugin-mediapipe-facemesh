@@ -54,8 +54,8 @@ class MediapipeFacemeshDeformSopParamsConfig extends NodeParamsConfig {
 const ParamsConfig = new MediapipeFacemeshDeformSopParamsConfig();
 
 export class MediapipeFacemeshDeformSopNode extends TypedSopNode<MediapipeFacemeshDeformSopParamsConfig> {
-	paramsConfig = ParamsConfig;
-	static type() {
+	override paramsConfig = ParamsConfig;
+	static override type() {
 		return 'mediapipeFacemeshDeform';
 	}
 
@@ -65,12 +65,12 @@ export class MediapipeFacemeshDeformSopNode extends TypedSopNode<MediapipeFaceme
 	public readonly sourceController = new MediapipeFacemeshSourceController(this);
 	public readonly streamController = new MediapipeFacemeshStreamController(this);
 
-	initializeNode() {
+	override initializeNode() {
 		this.io.inputs.setCount(1);
 		this.io.inputs.initInputsClonedState(InputCloneMode.NEVER);
 	}
 
-	async cook(inputCoreGroups: CoreGroup[]) {
+	override async cook(inputCoreGroups: CoreGroup[]) {
 		await this.streamController.cook(inputCoreGroups);
 	}
 }

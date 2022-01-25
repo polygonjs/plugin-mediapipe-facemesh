@@ -30,17 +30,18 @@ export class MediapipeFacemeshMeshesController {
 		const flipY = false;
 		const selfie = isBooleanTrue(pv.selfieMode);
 		const smoothFactor = pv.smoothFactor;
+		const performSmooth = smoothFactor > 0;
 		try {
 			for (let pt of landmark) {
 				this._pos.set(1 - pt.x, 1 - pt.y, pt.z);
 				this._uv.set(selfie ? this._pos.x : 1 - this._pos.x, flipY ? this._pos.y : 1 - this._pos.y);
+				this._pos.multiplyScalar(scale);
 
-				if (smoothFactor > 0) {
+				if (performSmooth) {
 					this._prevPos.fromArray(positionArray, i * 3);
-					this._pos.lerp(this._prevPos, 1 - smoothFactor);
+					this._pos.lerp(this._prevPos, smoothFactor);
 				}
 
-				this._pos.multiplyScalar(scale);
 				this._pos.toArray(positionArray, i * 3);
 				this._uv.toArray(uvArray, i * 2);
 				i++;

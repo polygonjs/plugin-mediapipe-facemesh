@@ -23,7 +23,7 @@ export class MediapipeFacemeshSourceController {
 			return;
 		}
 		const {videoElement} = data;
-		while (videoElement.paused || CoreDomUtils.isHTMLVideoElementLoaded(videoElement)) {
+		while (videoElement.paused || !CoreDomUtils.isHTMLVideoElementLoaded(videoElement)) {
 			console.warn('video is paused or not ready');
 			await CoreSleep.sleep(500);
 		}

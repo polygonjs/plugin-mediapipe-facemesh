@@ -16,13 +16,13 @@ class MediapipeFacemeshTopologySopParamsConfig extends NodeParamsConfig {}
 const ParamsConfig = new MediapipeFacemeshTopologySopParamsConfig();
 
 export class MediapipeFacemeshTopologySopNode extends TypedSopNode<MediapipeFacemeshTopologySopParamsConfig> {
-	paramsConfig = ParamsConfig;
-	static type() {
+	override paramsConfig = ParamsConfig;
+	static override type() {
 		return 'mediapipeFacemeshTopology';
 	}
 
 	private _uv = new Vector2();
-	async cook() {
+	override async cook() {
 		const geometry = new BufferGeometry();
 
 		// add position
