@@ -1,9 +1,9 @@
 import {MediapipeFacemeshDeformSopNode} from '../MediapipeFacemeshDeform';
 import {isBooleanTrue} from '@polygonjs/polygonjs/dist/src/core/Type';
 import {Results} from '@mediapipe/face_mesh';
-import {Vector3} from 'three/src/math/Vector3';
-import {Vector2} from 'three/src/math/Vector2';
-import {Mesh} from 'three/src/objects/Mesh';
+import {Vector3} from 'three';
+import {Vector2} from 'three';
+import {Mesh} from 'three';
 import {Attribute} from '@polygonjs/polygonjs/dist/src/core/geometry/Attribute';
 
 export class MediapipeFacemeshMeshesController {

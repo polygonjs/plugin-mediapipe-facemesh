@@ -6,9 +6,9 @@
 import {TypedSopNode} from '@polygonjs/polygonjs/dist/src/engine/nodes/sop/_Base';
 import {NodeParamsConfig} from '@polygonjs/polygonjs/dist/src/engine/nodes/utils/params/ParamsConfig';
 import {DEFAULT_POSITION} from '../../../core/Utils';
-import {BufferGeometry} from 'three/src/core/BufferGeometry';
-import {BufferAttribute} from 'three/src/core/BufferAttribute';
-import {Vector2} from 'three/src/math/Vector2';
+import {BufferGeometry} from 'three';
+import {BufferAttribute} from 'three';
+import {Vector2} from 'three';
 import {Attribute} from '@polygonjs/polygonjs/dist/src/core/geometry/Attribute';
 import {FACEMESH_TESSELATION} from '@mediapipe/face_mesh';
 

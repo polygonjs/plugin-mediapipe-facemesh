@@ -1,7 +1,7 @@
 import {MediapipeFacemeshDeformSopNode} from '../MediapipeFacemeshDeform';
 import {Results} from '@mediapipe/face_mesh';
 import {CoreGroup} from '@polygonjs/polygonjs/dist/src/core/geometry/Group';
-import {Mesh} from 'three/src/objects/Mesh';
+import {Mesh} from 'three';
 
 // type Resolve = (value: void | PromiseLike<void>) => void;
 
