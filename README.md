@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This repository is not used anymore, as the nodes have been fully integrated into the [core engine](https://polygonjs.com). See [live examples scenes](https://polygonjs.com/docs/examples-category/Computer%20Vision)
+
 # Polygonjs Mediapipe Facemesh Plugin
 
 This adds a Mediapipe Facemesh SOP nodes to the [Polygonjs webgl engine](https://polygonjs.com).
